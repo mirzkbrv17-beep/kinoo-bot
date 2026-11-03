@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Kino</title>
+<link rel="stylesheet" href="/style.css">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+<header>
+  <div class="brand">KINO</div>
+  <input id="q" type="search" placeholder="Qidirish…" autocomplete="off">
+</header>
+<nav id="kinds"></nav>
+<nav id="genres"></nav>
+<main>
+  <div id="grid"></div>
+  <div id="msg" class="msg"></div>
+  <div id="sentinel"></div>
+</main>
+<div id="sheet" class="sheet hidden">
+  <div class="sheet-body">
+    <button id="close" class="close" aria-label="close">✕</button>
+    <div id="detail"></div>
+  </div>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>

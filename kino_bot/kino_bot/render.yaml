@@ -1,0 +1,40 @@
+# Render Blueprint: Web Service (bot polling + Mini App + /health) + PostgreSQL.
+# Nega Web Service? Mini App uchun HTTPS port kerak. Polling bot ham shu jarayonda ishlaydi.
+# Muhim: bepul (free) Web Service 15 daqiqa trafik bo'lmasa uxlaydi -> bot to'xtaydi.
+#        Doimiy ishlashi uchun "starter" yoki undan yuqori tarifni ishlating.
+databases:
+  - name: kino-db
+    plan: basic-256mb        # bepul Postgres 30 kundan keyin o'chadi; doimiy saqlash uchun pullik tarif
+    databaseName: kino
+    user: kino
+
+services:
+  - type: web
+    name: kino-bot
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash start.sh
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: BOT_TOKEN
+        sync: false            # Dashboard'da o'zingiz kiritasiz (GitHub'ga yozilmaydi)
+      - key: ADMIN_ID
+        sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: kino-db
+          property: connectionString
+      - key: LOG_LEVEL
+        value: INFO
+
+# --- Muqobil: SQLite + Persistent Disk (faqat pullik tarif) ---
+# 1) databases bo'limini va DATABASE_URL ni olib tashlang
+# 2) service ichiga qo'shing:
+#      disk:
+#        name: kino-data
+#        mountPath: /var/data
+#        sizeGB: 1
+# 3) envVars ga: SQLITE_PATH=/var/data/kino.db
