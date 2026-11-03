@@ -1,0 +1,2 @@
+# kinoo-bot
+mirzaakbarov abdulaziz 
